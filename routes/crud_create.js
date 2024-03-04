@@ -13,6 +13,14 @@ const createData = async (req, res) => {
     if (!info) throw "Info is required";
     if (!rating) throw "Rating is required";
 
+    // check if exists...
+
+    const getExistingMovie = await moviesModel.findOne({
+      name: name,
+    });
+
+    if (getExistingMovie) throw "This movie already exists!";
+
     // If there is no validation error, we will then create data on database...
 
     await moviesModel.create({
